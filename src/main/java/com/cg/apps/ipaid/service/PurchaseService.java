@@ -8,6 +8,8 @@ import com.cg.apps.ipaid.request.PurchaseRequest;
 public interface PurchaseService {
 
 	public void savePurchase(PurchaseRequest purchaseRequest);
-		
-	public List<Purchase> fetchPurchaseDetails(String key, String value);
+
+	List<Purchase> fetchPurchaseDetails(String key, String value);
+
+	List<String> fetchDistinctProductNames();
 }

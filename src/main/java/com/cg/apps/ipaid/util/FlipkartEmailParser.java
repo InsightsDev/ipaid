@@ -35,7 +35,6 @@ public class FlipkartEmailParser implements EmailParser {
 	public boolean parseEmailInvoice(Message message) {
 
 		String line = null;
-		String prevLine = null;
 		boolean nextProductLine = false;
 		boolean nextProductCost = false;
 		try {
@@ -89,7 +88,7 @@ public class FlipkartEmailParser implements EmailParser {
 						} else {
 							nextProductCost = false;
 						}
-						prevLine = line;
+						//prevLine = line;
 					}
 				}
 

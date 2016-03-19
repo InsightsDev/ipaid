@@ -25,17 +25,17 @@ public class PurchaseController {
 
 	@Autowired
 	private PurchaseService purchaseService;
-	
+
 	@Loggable
 	@RequestMapping(value="/fetchUserPurchases", method = RequestMethod.GET)
-    public List<Purchase> fetchPurchaseDetailsForUserId(@RequestParam String user){ 
+    public List<Purchase> fetchPurchaseDetailsForUserId(@RequestParam String user){
 		List<Purchase> purchase = purchaseService.fetchPurchaseDetails("metadata.userId", user);
 		return purchase;
 	}
-	
+
 	@Loggable
 	@RequestMapping(value="/fetchProductCost", method = RequestMethod.GET)
-    public String fetchProductDetails(@RequestParam String productName){ 
+    public String fetchProductDetails(@RequestParam String productName){
 		List<Purchase> purchase = purchaseService.fetchPurchaseDetails("metadata.productName", productName);
 		List<Double> costs = new ArrayList<>();
 		for(Purchase p : purchase) {
@@ -44,16 +44,16 @@ public class PurchaseController {
 		Collections.sort(costs);
 		return String.format("Best cost for %s is %s", productName,String.valueOf(costs.get(0)));
 	}
-	
+
 	@RequestMapping(value="/upload", method=RequestMethod.POST)
     public void handleFileUpload(@RequestParam("user") String user, @RequestParam("file") MultipartFile file){
 		File convFile = null;
 		try{
 			convFile = new File("D:/" +file.getOriginalFilename());
-		    convFile.createNewFile(); 
-		    FileOutputStream fos = new FileOutputStream(convFile); 
+		    convFile.createNewFile();
+		    FileOutputStream fos = new FileOutputStream(convFile);
 		    fos.write(file.getBytes());
-		    fos.close(); 
+		    fos.close();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -64,4 +64,9 @@ public class PurchaseController {
 		purchaseService.savePurchase(request);
 
     }
+
+	@RequestMapping(value="/productName")
+	public List<String> fetchDistinctProductNames() {
+		return purchaseService.fetchDistinctProductNames();
+	}
 }

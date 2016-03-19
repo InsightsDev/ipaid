@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.gridfs.GridFsOperations;
@@ -26,10 +27,13 @@ public class PurchaseServiceImpl implements PurchaseService {
 
 	@Autowired
     private GridFsOperations gridOperations;
-	
+
+	@Autowired
+	private MongoTemplate mongoTemplate;
+
 	@Autowired
 	private Mapper mapper;
-	
+
 	@Override
 	@Loggable
 	public void savePurchase(PurchaseRequest purchaseRequest) {
@@ -42,12 +46,11 @@ public class PurchaseServiceImpl implements PurchaseService {
         metaData.put("storeName", purchaseRequest.getStoreName());
         metaData.put("userId", purchaseRequest.getUserId());
         metaData.put("purchaseDate", purchaseRequest.getPurchaseDate());
-        
+
         InputStream inputStream = null;
         try {
             inputStream = new FileInputStream(purchaseRequest.getBill());
             gridOperations.store(inputStream, purchaseRequest.getBill().getName(), "application/octet-stream", metaData);
-
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -60,7 +63,7 @@ public class PurchaseServiceImpl implements PurchaseService {
             }
         }
 	}
-	
+
 	@Override
 	@Loggable
 	public List<Purchase> fetchPurchaseDetails(String key, String value) {
@@ -71,5 +74,10 @@ public class PurchaseServiceImpl implements PurchaseService {
 			purchases.add(purchase);
 		}
 		return purchases;
+	}
+
+	@Override
+	public List<String> fetchDistinctProductNames() {
+		return mongoTemplate.getCollection("fs.files").distinct("productName");
 	}
 }
