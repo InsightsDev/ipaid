@@ -1,62 +1,88 @@
 package com.cg.apps.ipaid.entity;
 
+import java.util.Date;
+
 public class User {
 
-	private String firstName;
-	private String lastName;
-	// TODO: Add image
-	// private String image;
-	private String emailId;
-	private String password;
-	private Long phoneNumber;
-	private boolean verified;
+	private String id;
+	private UserMetadata metadata;
+	private String filename;
+	private String contentType;
+	private Long chunkSize;
+	private Long length;
+	private Date uploadDate;
+	private String md5;
+	private String aliases;
 
-	public String getFirstName() {
-		return firstName;
+	public String getId() {
+		return id;
 	}
 
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
+	public void setId(String id) {
+		this.id = id;
 	}
 
-	public String getLastName() {
-		return lastName;
+	public UserMetadata getMetadata() {
+		return metadata;
 	}
 
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setMetadata(UserMetadata metadata) {
+		this.metadata = metadata;
 	}
 
-	public String getEmailId() {
-		return emailId;
+	public String getFilename() {
+		return filename;
 	}
 
-	public void setEmailId(String emailId) {
-		this.emailId = emailId;
+	public void setFilename(String filename) {
+		this.filename = filename;
 	}
 
-	public String getPassword() {
-		return password;
+	public String getContentType() {
+		return contentType;
 	}
 
-	public void setPassword(String password) {
-		this.password = password;
+	public void setContentType(String contentType) {
+		this.contentType = contentType;
 	}
 
-	public Long getPhoneNumber() {
-		return phoneNumber;
+	public Long getChunkSize() {
+		return chunkSize;
 	}
 
-	public void setPhoneNumber(Long phoneNumber) {
-		this.phoneNumber = phoneNumber;
+	public void setChunkSize(Long chunkSize) {
+		this.chunkSize = chunkSize;
 	}
 
-	public boolean isVerified() {
-		return verified;
+	public Long getLength() {
+		return length;
 	}
 
-	public void setVerified(boolean verified) {
-		this.verified = verified;
+	public void setLength(Long length) {
+		this.length = length;
 	}
 
+	public Date getUploadDate() {
+		return uploadDate;
+	}
+
+	public void setUploadDate(Date uploadDate) {
+		this.uploadDate = uploadDate;
+	}
+
+	public String getMd5() {
+		return md5;
+	}
+
+	public void setMd5(String md5) {
+		this.md5 = md5;
+	}
+
+	public String getAliases() {
+		return aliases;
+	}
+
+	public void setAliases(String aliases) {
+		this.aliases = aliases;
+	}
 }
