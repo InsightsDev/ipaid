@@ -2,6 +2,7 @@
 	box-sizing: border-box;
 }
 body{
+	font-family: 'Lato';
 	height: 100%;
 	width: 100%;
 	margin: 0px;
