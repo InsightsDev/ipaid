@@ -6,16 +6,15 @@
 		<p>{{userName}}</p>
 	</div>
 	<div class="search-box">
-		<div ng-controller='searchAutoCompleteController'>
+		<!-- <div ng-controller='searchAutoCompleteController'>
 			<live-search id="search1" type="text"
 				  live-search-callback="mySearchCallback"
 				  live-search-item-template="{{result.city}}<strong>{{result.state}}</strong><b>{{result.country}}</b>"
 				  live-search-select="fullName"
 				  ng-model="search1" ></live-search>
-		</div>
+		</div> -->
 		<form class="searchbox">
-		{{userName}}
-			<input type="text" placeholder="Search...." class="search-txt">
+			<input type="text" name="productName" ng-model="productName" placeholder="Search...." class="search-txt">
 			<input type="submit" value="" class="btn-search" ng-click="displayDetails()">
 		</form>
 
@@ -28,9 +27,11 @@
 
 	</div>
 	<div class="action">
-		<button class='btn-email'>Email</button>
-		<input ng-model="bill" ng-click="upload()" class='btn-email' type="file" accept="image/*;capture=camera">Scan
-		<!--<button class="btn-cm">Scan</button>-->
+		<!-- <form method="POST" enctype="multipart/form-data"> -->
+			<button class='btn-email'>Email</button>
+			<input type="file" id="bill" file-model="fileToUpload" onchange="angular.element(this).scope().upload(this)" accept="image/*;capture=camera" style="display: none;"/>
+			<button class="btn-cm" onclick="document.getElementById('bill').click()">Scan</button>
+		<!-- </form> -->
 	</div>
 	<div class="graph">
 		<progress value="22" max="100">

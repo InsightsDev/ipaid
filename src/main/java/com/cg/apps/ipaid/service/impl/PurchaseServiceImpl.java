@@ -76,8 +76,13 @@ public class PurchaseServiceImpl implements PurchaseService {
 		return purchases;
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<String> fetchDistinctProductNames() {
 		return mongoTemplate.getCollection("fs.files").distinct("productName");
+	}
+
+	public List<Purchase> fetchHotTrends() {
+		List<GridFSDBFile> results = gridOperations.find(new Query().addCriteria(Criteria.where(key).is(value)));
 	}
 }

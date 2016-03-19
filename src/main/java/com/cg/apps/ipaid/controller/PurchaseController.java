@@ -49,7 +49,7 @@ public class PurchaseController {
     public void handleFileUpload(@RequestParam("user") String user, @RequestParam("file") MultipartFile file){
 		File convFile = null;
 		try{
-			convFile = new File("D:/" +file.getOriginalFilename());
+			convFile = new File(file.getOriginalFilename());
 		    convFile.createNewFile();
 		    FileOutputStream fos = new FileOutputStream(convFile);
 		    fos.write(file.getBytes());

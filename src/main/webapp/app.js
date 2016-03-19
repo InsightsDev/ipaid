@@ -13,6 +13,21 @@ app.config(['$routeProvider', function ($routeProvider) {
 		redirectTo: '/home'
 	})
 }])
+.directive('fileModel', ['$parse', function ($parse) {
+    return {
+        restrict: 'A',
+        link: function(scope, element, attrs) {
+            var model = $parse(attrs.fileModel);
+            var modelSetter = model.assign;
+
+            element.bind('change', function(){
+                scope.$apply(function(){
+                	modelSetter(scope, element[0].files[0]);
+                });
+            });
+        }
+    };
+}])
 .service('appService', ['$http', function ($http){
 	this.getUser = $http({
 	  					method: 'GET',
@@ -22,10 +37,26 @@ app.config(['$routeProvider', function ($routeProvider) {
 					   	method: 'GET',
 					   	url: 'Jsons/city.json'
 					});
-	this.getSearchResult = $http({
+	this.getSearchResult = function(productName) {
+					return $http({
 						method: 'GET',
-						url: 'Jsons/search.json'
+						url: 'purchase/fetchProductCost',
+						params: {productName: productName}
 					});
+	}
+	 this.uploadFileToUrl = function(file, userName, uploadUrl){
+	        var fd = new FormData();
+	        fd.append('file', file);
+	        fd.append('user', userName);
+	        $http.post(uploadUrl, fd, {
+	            transformRequest: angular.identity,
+	            headers: {'Content-Type': undefined}
+	        })
+	        .success(function(){
+	        })
+	        .error(function(){
+	        });
+	    }
 }])
 .controller('loginController',['$scope', 'appService', function ($scope, appService){
 	appService.getUser.then(function(data){
@@ -53,17 +84,24 @@ app.config(['$routeProvider', function ($routeProvider) {
 	}
 }])
 .controller('homeController',['$scope', 'appService', function ($scope, appService){
-	//$scope.userName = "jack";
-	$scope.bill = null;
+	$scope.userName = "testuser1@test.com";
+	//$scope.bill = null;
 	$scope.displayDetails = function (){
-		appService.getSearchResult.then(function(data){
+		productName = $scope.productName
+		appService.getSearchResult(productName).then(function(data){
 			$scope.serachData = data.data.users;
 		})
 	}
-	$scope.upload = function (){
-		console.log($scope.bill);
+	$scope.upload = function (element){
+		var file = element.files[0];
+		var userName = $scope.userName;
+		var uploadUrl = 'purchase/upload';
+		appService.uploadFileToUrl(file, userName, uploadUrl);
 	}
 	$scope.clearData = function () {
 		$scope.serachData = null;
+	}
+	$scope.clickUpload = function(){
+	    angular.element('#bill').trigger('click');
 	}
 }])
