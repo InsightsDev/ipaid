@@ -16,11 +16,16 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 
 @Component
 public class EmailReader {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(EmailReader.class);
+
+	private enum INVOICE_TYPES {
+		FLIPKART, AMAZON;
+	}
 
 	@Value("${ipaid.mail}")
 	private String email;
@@ -46,23 +51,24 @@ public class EmailReader {
 	@Value("${ipaid.mail.pwd}")
 	private String password;
 
-	@Scheduled(fixedDelay = 1000)
-	@PostConstruct
+	@Scheduled(fixedDelay = 60000)
 	public void scanUnreadEmails() {
 		Properties properties = System.getProperties();
 		try {
 			properties.put("mail.smtp.host", host);
+			properties.put("mail.smtp.port", port);
+			properties.put("mail.smtp.user", userName);
+			properties.put("mail.smtp.starttls.enable", isAuthRequired);
 			properties.put("mail.smtp.socketFactory.port", socketFactoryPort);
 			properties.put("mail.smtp.socketFactory.class", socketFactoryClass);
 			properties.put("mail.smtp.auth", isAuthRequired);
-			properties.put("mail.smtp.port", port);
 
 			Session session = Session.getDefaultInstance(properties);
 
-			Store store = session.getStore("pop3");
+			Store store = session.getStore("imaps");
 			store.connect(host, userName, password);
 			Folder inbox = store.getFolder("inbox");
-			inbox.open(Folder.READ_ONLY);
+			inbox.open(Folder.READ_WRITE);
 
 			// search for all "unseen" messages
 			Flags seen = new Flags(Flags.Flag.SEEN);
@@ -73,17 +79,12 @@ public class EmailReader {
 				LOGGER.warn("No messages found.");
 
 			for (int i = 0; i < messages.length; i++) {
-				// stop after listing ten messages
-				if (i > 10) {
-					System.exit(0);
-					inbox.close(true);
-					store.close();
-				}
-
 				LOGGER.info("Message " + (i + 1));
 				LOGGER.info("From : " + messages[i].getFrom()[0]);
 				LOGGER.info("Subject : " + messages[i].getSubject());
 				LOGGER.info("Sent Date : " + messages[i].getSentDate());
+				parseEmailContent(messages[i]);
+				messages[i].setFlag(Flags.Flag.SEEN, true);
 			}
 
 			inbox.close(true);
@@ -92,5 +93,23 @@ public class EmailReader {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+
+	private void parseEmailContent(final Message message) {
+		try {
+			if (null != message) {
+				final String subject = message.getSubject();
+				if (!StringUtils.isEmpty(subject)) {
+					for (INVOICE_TYPES invoiceType: INVOICE_TYPES.values()) {
+						if(subject.toLowerCase().contains(invoiceType.name().toLowerCase())) {
+							LOGGER.info("Invoice Type: {}", invoiceType.name());
+						}
+					}
+				}
+			}
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
+
 	}
 }
