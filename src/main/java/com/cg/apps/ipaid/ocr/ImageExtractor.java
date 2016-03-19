@@ -1,15 +1,16 @@
 package com.cg.apps.ipaid.ocr;
 
 import java.io.File;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.cg.apps.ipaid.response.PurchaseResponse;
-
 import net.sourceforge.tess4j.ITesseract;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
+
+import com.cg.apps.ipaid.response.PurchaseRequest;
 
 public class ImageExtractor {
 
@@ -24,8 +25,8 @@ public class ImageExtractor {
         return result;
 	}
 	
-	public PurchaseResponse processExtractedText(String extractedText) {
-		PurchaseResponse purchaseRequest = new PurchaseResponse();
+	public PurchaseRequest processExtractedText(String extractedText) {
+		PurchaseRequest purchaseRequest = new PurchaseRequest();
 		String[] lines = extractedText.split("\\r?\\n");
 		List<String> list = new ArrayList<String>(Arrays.asList(lines));
 		list.removeAll(Arrays.asList("",null));
@@ -41,7 +42,13 @@ public class ImageExtractor {
 			if(line.contains("Date:")) {
 				purchaseRequest.setPurchaseDate(line.substring(line.indexOf(":")+1,line.length()).trim());
 			}else if (line.contains("Gross Amount")) {
-				purchaseRequest.setProductCost(Double.valueOf(line.substring(line.indexOf("Amount")+7,line.length())));
+				NumberFormat nf = NumberFormat.getInstance();
+				String amt = line.substring(line.indexOf("Amount")+7,line.length());
+				try {
+					purchaseRequest.setProductCost(nf.parse(amt).doubleValue());
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
 			} else if(line.contains("Bill")) {
 				purchaseRequest.setInvoiceNo(line.substring(line.indexOf(":")+1,line.indexOf("Time")-1).trim());
 			}

@@ -13,12 +13,13 @@ import javax.mail.search.FlagTerm;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.cg.apps.ipaid.util.EmailParser;
-import com.cg.apps.ipaid.util.FlipkartEmailParser;
+import com.cg.apps.ipaid.response.PurchaseRequest;
+import com.cg.apps.ipaid.service.PurchaseService;
 import com.cg.apps.ipaid.util.InvoiceTypes;
 
 @Component
@@ -49,6 +50,9 @@ public class EmailReader {
 
 	@Value("${ipaid.mail.pwd}")
 	private String password;
+
+	@Autowired
+	private PurchaseService purchaseService;
 
 	@Scheduled(fixedDelay = 60000)
 	public void scanUnreadEmails() {
@@ -104,7 +108,10 @@ public class EmailReader {
 					for (InvoiceTypes invoiceType: InvoiceTypes.values()) {
 						if(subject.toLowerCase().contains(invoiceType.name().toLowerCase())) {
 							LOGGER.info("Invoice Type: {}", invoiceType.name());
-							InvoiceTypes.getEmailParserInstance(invoiceType).parseEmailInvoice(message);
+							PurchaseRequest purchaseRequest = InvoiceTypes.getEmailParserInstance(invoiceType).parseEmailInvoice(message);
+							if(null != purchaseRequest) {
+								purchaseService.savePurchase(purchaseRequest);
+							}
 						}
 					}
 				}

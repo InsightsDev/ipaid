@@ -1,10 +1,8 @@
 package com.cg.apps.ipaid.response;
 
-import java.io.File;
 
-public class PurchaseResponse {
-
-	private String id;
+public class PurchaseResponse implements Comparable<PurchaseResponse> {
+	
 	private String productName;
 	private String invoiceNo;
 	private Double productCost;
@@ -13,13 +11,7 @@ public class PurchaseResponse {
 	private String storeName;
 	private String userId;
 	private String purchaseDate;
-	private File bill;
-	public String getId() {
-		return id;
-	}
-	public void setId(String id) {
-		this.id = id;
-	}
+	private Integer rank;
 	public String getProductName() {
 		return productName;
 	}
@@ -68,11 +60,16 @@ public class PurchaseResponse {
 	public void setPurchaseDate(String purchaseDate) {
 		this.purchaseDate = purchaseDate;
 	}
-	public File getBill() {
-		return bill;
+	public Integer getRank() {
+		return rank;
 	}
-	public void setBill(File bill) {
-		this.bill = bill;
+	public void setRank(Integer rank) {
+		this.rank = rank;
+	}
+	@Override
+	public int compareTo(PurchaseResponse o) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	

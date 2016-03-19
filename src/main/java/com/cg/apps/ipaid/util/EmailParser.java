@@ -2,6 +2,8 @@ package com.cg.apps.ipaid.util;
 
 import javax.mail.Message;
 
+import com.cg.apps.ipaid.response.PurchaseRequest;
+
 public interface EmailParser {
-	boolean parseEmailInvoice(Message message);
+	PurchaseRequest parseEmailInvoice(Message message);
 }

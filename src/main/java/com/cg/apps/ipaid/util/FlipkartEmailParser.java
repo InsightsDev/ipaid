@@ -24,7 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
-import com.cg.apps.ipaid.entity.PurchaseMetaData;
+import com.cg.apps.ipaid.response.PurchaseRequest;
 
 public class FlipkartEmailParser implements EmailParser {
 
@@ -32,16 +32,15 @@ public class FlipkartEmailParser implements EmailParser {
 	private static final String INVOICE_FILE_PATH = "/Users/shishirkumar/git/ipaid/tempInvoices/";
 
 	@Override
-	public boolean parseEmailInvoice(Message message) {
-
+	public PurchaseRequest parseEmailInvoice(Message message) {
+		PurchaseRequest purchaseRequest = null;
 		String line = null;
-		String prevLine = null;
 		boolean nextProductLine = false;
 		boolean nextProductCost = false;
 		try {
 			Address[] froms = message.getFrom();
 			String email = froms == null ? null : ((InternetAddress) froms[0]).getAddress();
-			PurchaseMetaData purchaseMetaData = new PurchaseMetaData("Online", "Flipkart", email);
+			purchaseRequest = new PurchaseRequest("Online", "Flipkart", email);
 			String filePath = saveInvoicePDF(message);
 			if (StringUtils.isNoneEmpty(filePath)) {
 				BodyContentHandler handler = new BodyContentHandler();
@@ -63,10 +62,10 @@ public class FlipkartEmailParser implements EmailParser {
 				while ((line = bufReader.readLine()) != null) {
 					if (StringUtils.isNoneBlank(line)) {
 						if (nextProductLine) {
-							purchaseMetaData.setProductName(line.trim());
+							purchaseRequest.setProductName(line.trim());
 						} else if(nextProductCost) {
 							Double cost = Double.valueOf(line.trim());
-							purchaseMetaData.setProductCost(cost);
+							purchaseRequest.setProductCost(cost);
 						}
 						// find product name
 						if (StringUtils.contains(line, "WID")) {
@@ -76,12 +75,12 @@ public class FlipkartEmailParser implements EmailParser {
 						}
 						// find invoice number
 						if(StringUtils.contains(line, "Invoice No") && StringUtils.contains(line, ":")) {
-							purchaseMetaData.setInvoiceNo(StringUtils.split(line, ":")[1].trim());
+							purchaseRequest.setInvoiceNo(StringUtils.split(line, ":")[1].trim());
 						}
 						if(StringUtils.contains(line, "Order Date:")) {
 							String purchaseDate = StringUtils.replace(line, "Order Date:", StringUtils.EMPTY).trim();
 							LOGGER.info("purchaseDate: {}", purchaseDate);
-							purchaseMetaData.setPurchaseDate(purchaseDate);
+							purchaseRequest.setPurchaseDate(purchaseDate);
 						}
 						// find price
 						if(StringUtils.contains(line, "Grand Total")) {
@@ -89,7 +88,7 @@ public class FlipkartEmailParser implements EmailParser {
 						} else {
 							nextProductCost = false;
 						}
-						prevLine = line;
+						//prevLine = line;
 					}
 				}
 
@@ -99,12 +98,12 @@ public class FlipkartEmailParser implements EmailParser {
 					LOGGER.debug("{}: {}", name, metadata.get(name));
 				}
 			}
-			LOGGER.info("{}", purchaseMetaData);
+			LOGGER.info("{}", purchaseRequest);
 		} catch (IOException | SAXException | TikaException | MessagingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return false;
+		return purchaseRequest;
 	}
 
 	private String saveInvoicePDF(Message message) {

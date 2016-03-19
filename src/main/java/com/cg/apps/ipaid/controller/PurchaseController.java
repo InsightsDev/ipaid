@@ -2,10 +2,10 @@ package com.cg.apps.ipaid.controller;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,6 +15,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.cg.apps.ipaid.logging.Loggable;
 import com.cg.apps.ipaid.ocr.ImageExtractor;
+import com.cg.apps.ipaid.response.PurchaseRequest;
 import com.cg.apps.ipaid.response.PurchaseResponse;
 import com.cg.apps.ipaid.service.PurchaseService;
 
@@ -24,6 +25,9 @@ public class PurchaseController {
 
 	@Autowired
 	private PurchaseService purchaseService;
+
+	@Autowired
+	private Mapper mapper;
 	
 	@Loggable
 	@RequestMapping(value="/fetchUserPurchases", method = RequestMethod.GET)
@@ -31,36 +35,36 @@ public class PurchaseController {
 		List<PurchaseResponse> purchase = purchaseService.fetchPurchaseDetails("metadata.userId", user);
 		return purchase;
 	}
-	
-	@Loggable
-	@RequestMapping(value="/fetchProductCost", method = RequestMethod.GET)
-    public String fetchProductDetails(@RequestParam String productName){ 
-		List<PurchaseResponse> purchase = purchaseService.fetchPurchaseDetails("metadata.productName", productName);
-		List<Double> costs = new ArrayList<>();
-		for(PurchaseResponse p : purchase) {
-			costs.add(p.getProductCost());
-		}
-		Collections.sort(costs);
-		return String.format("Best cost for %s is %s", productName,String.valueOf(costs.get(0)));
+
+	@RequestMapping(value="/searchProduct", method = RequestMethod.GET)
+    public List<PurchaseResponse> searchProduct(@RequestParam String productName){
+		List<PurchaseResponse> purchases = purchaseService.fetchPurchaseDetails("metadata.productName", productName);
+		Collections.sort(purchases);
+		return purchases;
 	}
-	
+
 	@RequestMapping(value="/upload", method=RequestMethod.POST)
     public void handleFileUpload(@RequestParam("user") String user, @RequestParam("file") MultipartFile file){
 		File convFile = null;
 		try{
-			convFile = new File("D:/" +file.getOriginalFilename());
-		    convFile.createNewFile(); 
-		    FileOutputStream fos = new FileOutputStream(convFile); 
+			convFile = new File(file.getOriginalFilename());
+		    convFile.createNewFile();
+		    FileOutputStream fos = new FileOutputStream(convFile);
 		    fos.write(file.getBytes());
-		    fos.close(); 
+		    fos.close();
 		}catch(Exception e) {
 			e.printStackTrace();
 		}
 		ImageExtractor processor = new ImageExtractor();
-		PurchaseResponse request = processor.processExtractedText(processor.extractTextFromImage(convFile));
+		PurchaseRequest request = processor.processExtractedText(processor.extractTextFromImage(convFile));
 		request.setBill(convFile);
 		request.setUserId(user);
 		purchaseService.savePurchase(request);
 
     }
+
+	@RequestMapping(value="/productName")
+	public List<String> fetchDistinctProductNames() {
+		return purchaseService.fetchDistinctProductNames();
+	}
 }

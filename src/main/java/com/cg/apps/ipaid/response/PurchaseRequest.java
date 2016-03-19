@@ -1,9 +1,12 @@
-package com.cg.apps.ipaid.entity;
+package com.cg.apps.ipaid.response;
+
+import java.io.File;
 
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 
-public class PurchaseMetaData {
+public class PurchaseRequest {
 
+	private String id;
 	private String productName;
 	private String invoiceNo;
 	private Double productCost;
@@ -12,12 +15,21 @@ public class PurchaseMetaData {
 	private String storeName;
 	private String userId;
 	private String purchaseDate;
+	private File bill;
 
-	public PurchaseMetaData() {
+	public String getId() {
+		return id;
+	}
+
+	public void setId(String id) {
+		this.id = id;
+	}
+
+	public PurchaseRequest() {
 
 	}
 
-	public PurchaseMetaData(String location, String storeName, String userId) {
+	public PurchaseRequest(String location, String storeName, String userId) {
 		this.location = location;
 		this.storeName = storeName;
 		this.userId = userId;
@@ -45,6 +57,14 @@ public class PurchaseMetaData {
 
 	public void setProductCost(Double productCost) {
 		this.productCost = productCost;
+	}
+
+	public String getProductCode() {
+		return productCode;
+	}
+
+	public void setProductCode(String productCode) {
+		this.productCode = productCode;
 	}
 
 	public String getLocation() {
@@ -79,16 +99,17 @@ public class PurchaseMetaData {
 		this.purchaseDate = purchaseDate;
 	}
 
-	public String getProductCode() {
-		return productCode;
+	public File getBill() {
+		return bill;
 	}
 
-	public void setProductCode(String productCode) {
-		this.productCode = productCode;
+	public void setBill(File bill) {
+		this.bill = bill;
 	}
 
 	@Override
 	public String toString() {
 		return ReflectionToStringBuilder.toString(this);
 	}
+
 }

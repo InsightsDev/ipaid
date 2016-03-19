@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.gridfs.GridFsOperations;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import com.cg.apps.ipaid.entity.Purchase;
 import com.cg.apps.ipaid.logging.Loggable;
+import com.cg.apps.ipaid.response.PurchaseRequest;
 import com.cg.apps.ipaid.response.PurchaseResponse;
 import com.cg.apps.ipaid.service.PurchaseService;
 import com.mongodb.BasicDBObject;
@@ -26,13 +28,16 @@ public class PurchaseServiceImpl implements PurchaseService {
 
 	@Autowired
     private GridFsOperations gridOperations;
-	
+
+	@Autowired
+	private MongoTemplate mongoTemplate;
+
 	@Autowired
 	private Mapper mapper;
-	
+
 	@Override
 	@Loggable
-	public void savePurchase(PurchaseResponse purchaseRequest) {
+	public void savePurchase(PurchaseRequest purchaseRequest) {
 		DBObject metaData = new BasicDBObject();
         metaData.put("productName", purchaseRequest.getProductName());
         metaData.put("invoiceNo", purchaseRequest.getInvoiceNo());
@@ -42,12 +47,11 @@ public class PurchaseServiceImpl implements PurchaseService {
         metaData.put("storeName", purchaseRequest.getStoreName());
         metaData.put("userId", purchaseRequest.getUserId());
         metaData.put("purchaseDate", purchaseRequest.getPurchaseDate());
-        
+
         InputStream inputStream = null;
         try {
             inputStream = new FileInputStream(purchaseRequest.getBill());
             gridOperations.store(inputStream, purchaseRequest.getBill().getName(), "application/octet-stream", metaData);
-
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
@@ -60,7 +64,7 @@ public class PurchaseServiceImpl implements PurchaseService {
             }
         }
 	}
-	
+
 	@Override
 	@Loggable
 	public List<PurchaseResponse> fetchPurchaseDetails(String key, String value) {
@@ -72,4 +76,14 @@ public class PurchaseServiceImpl implements PurchaseService {
 		}
 		return purchases;
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<String> fetchDistinctProductNames() {
+		return mongoTemplate.getCollection("fs.files").distinct("productName");
+	}
+
+//	public List<Purchase> fetchHotTrends() {
+//		List<GridFSDBFile> results = gridOperations.find(new Query().addCriteria(Criteria.where(key).is(value)));
+//	}
 }
