@@ -2,7 +2,6 @@ package com.cg.apps.ipaid.job;
 
 import java.util.Properties;
 
-import javax.annotation.PostConstruct;
 import javax.mail.Flags;
 import javax.mail.Folder;
 import javax.mail.Message;
@@ -11,12 +10,12 @@ import javax.mail.Session;
 import javax.mail.Store;
 import javax.mail.search.FlagTerm;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
-import org.springframework.util.StringUtils;
 
 @Component
 public class EmailReader {
@@ -99,7 +98,7 @@ public class EmailReader {
 		try {
 			if (null != message) {
 				final String subject = message.getSubject();
-				if (!StringUtils.isEmpty(subject)) {
+				if (StringUtils.isNotEmpty(subject)) {
 					for (INVOICE_TYPES invoiceType: INVOICE_TYPES.values()) {
 						if(subject.toLowerCase().contains(invoiceType.name().toLowerCase())) {
 							LOGGER.info("Invoice Type: {}", invoiceType.name());

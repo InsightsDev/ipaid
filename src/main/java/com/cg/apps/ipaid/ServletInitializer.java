@@ -1,8 +1,16 @@
 package com.cg.apps.ipaid;
 
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.context.web.SpringBootServletInitializer;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 
+@Configuration
+@ComponentScan(basePackages = "com")
+@EnableMongoRepositories
+@EnableAutoConfiguration
 public class ServletInitializer extends SpringBootServletInitializer {
 
 	@Override
