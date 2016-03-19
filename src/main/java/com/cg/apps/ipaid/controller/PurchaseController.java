@@ -1,13 +1,21 @@
 package com.cg.apps.ipaid.controller;
 
 import java.io.File;
+import java.io.FileOutputStream;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.cg.apps.ipaid.entity.Purchase;
 import com.cg.apps.ipaid.logging.Loggable;
+import com.cg.apps.ipaid.ocr.ImageExtractor;
 import com.cg.apps.ipaid.request.PurchaseRequest;
 import com.cg.apps.ipaid.service.PurchaseService;
 
@@ -19,17 +27,41 @@ public class PurchaseController {
 	private PurchaseService purchaseService;
 	
 	@Loggable
-	@RequestMapping(value="/save", method = RequestMethod.GET)
-    public void savePurchaseDetails(){ 
-		PurchaseRequest request = new PurchaseRequest();
-		request.setInvoiceNo("123");
-		request.setLocation("bangalore");
-		request.setProductCode("AB123");
-		request.setProductCost(100000.0);
-		request.setProductName("Macbook");
-		request.setStoreName("Reliance");
-		request.setUserId("arun_mohan@gmail.com");
-		request.setBill(new File("testImages/1.jpg"));
-		purchaseService.savePurchase(request);
+	@RequestMapping(value="/fetchUserPurchases", method = RequestMethod.GET)
+    public List<Purchase> fetchPurchaseDetailsForUserId(@RequestParam String user){ 
+		List<Purchase> purchase = purchaseService.fetchPurchaseDetails("metadata.userId", user);
+		return purchase;
 	}
+	
+	@Loggable
+	@RequestMapping(value="/fetchProductCost", method = RequestMethod.GET)
+    public String fetchProductDetails(@RequestParam String productName){ 
+		List<Purchase> purchase = purchaseService.fetchPurchaseDetails("metadata.productName", productName);
+		List<Double> costs = new ArrayList<>();
+		for(Purchase p : purchase) {
+			costs.add(p.getMetadata().getProductCost());
+		}
+		Collections.sort(costs);
+		return String.format("Best cost for %s is %s", productName,String.valueOf(costs.get(0)));
+	}
+	
+	@RequestMapping(value="/upload", method=RequestMethod.POST)
+    public void handleFileUpload(@RequestParam("user") String user, @RequestParam("file") MultipartFile file){
+		File convFile = null;
+		try{
+			convFile = new File("D:/" +file.getOriginalFilename());
+		    convFile.createNewFile(); 
+		    FileOutputStream fos = new FileOutputStream(convFile); 
+		    fos.write(file.getBytes());
+		    fos.close(); 
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		ImageExtractor processor = new ImageExtractor();
+		PurchaseRequest request = processor.processExtractedText(processor.extractTextFromImage(convFile));
+		request.setBill(convFile);
+		request.setUserId(user);
+		purchaseService.savePurchase(request);
+
+    }
 }
