@@ -1,5 +1,7 @@
 package com.cg.apps.ipaid.entity;
 
+import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
+
 public class PurchaseMetaData {
 
 	private String productName;
@@ -10,7 +12,17 @@ public class PurchaseMetaData {
 	private String storeName;
 	private String userId;
 	private String purchaseDate;
-	
+
+	public PurchaseMetaData() {
+
+	}
+
+	public PurchaseMetaData(String location, String storeName, String userId) {
+		this.location = location;
+		this.storeName = storeName;
+		this.userId = userId;
+	}
+
 	public String getProductName() {
 		return productName;
 	}
@@ -59,6 +71,9 @@ public class PurchaseMetaData {
 	public void setProductCode(String productCode) {
 		this.productCode = productCode;
 	}
-	
-	
+
+	@Override
+	public String toString() {
+		return ReflectionToStringBuilder.toString(this);
+	}
 }

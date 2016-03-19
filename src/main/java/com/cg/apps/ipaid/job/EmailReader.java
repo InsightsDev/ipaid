@@ -17,14 +17,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import com.cg.apps.ipaid.util.EmailParser;
+import com.cg.apps.ipaid.util.FlipkartEmailParser;
+import com.cg.apps.ipaid.util.InvoiceTypes;
+
 @Component
 public class EmailReader {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(EmailReader.class);
-
-	private enum INVOICE_TYPES {
-		FLIPKART, AMAZON;
-	}
 
 	@Value("${ipaid.mail}")
 	private String email;
@@ -61,6 +61,8 @@ public class EmailReader {
 			properties.put("mail.smtp.socketFactory.port", socketFactoryPort);
 			properties.put("mail.smtp.socketFactory.class", socketFactoryClass);
 			properties.put("mail.smtp.auth", isAuthRequired);
+			properties.put("mail.imaps.partialfetch", "false");
+			properties.put("mail.mime.base64.ignoreerrors", "true");
 
 			Session session = Session.getDefaultInstance(properties);
 
@@ -99,14 +101,15 @@ public class EmailReader {
 			if (null != message) {
 				final String subject = message.getSubject();
 				if (StringUtils.isNotEmpty(subject)) {
-					for (INVOICE_TYPES invoiceType: INVOICE_TYPES.values()) {
+					for (InvoiceTypes invoiceType: InvoiceTypes.values()) {
 						if(subject.toLowerCase().contains(invoiceType.name().toLowerCase())) {
 							LOGGER.info("Invoice Type: {}", invoiceType.name());
+							InvoiceTypes.getEmailParserInstance(invoiceType).parseEmailInvoice(message);
 						}
 					}
 				}
 			}
-		} catch (MessagingException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
