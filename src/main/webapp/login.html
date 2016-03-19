@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>Trendy Login Forms in Flat Design :: w3layouts</title>
+<link href="styles/loginstyle.css" rel='stylesheet' type='text/css' />
+<script type="application/x-javascript">
+
+	 addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); }
+
+</script>
+<!--webfonts-->
+<link
+	href='http://fonts.googleapis.com/css?family=PT+Sans:400,700,400italic,700italic|Oswald:400,300,700'
+	rel='stylesheet' type='text/css'>
+<link
+	href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,400,300,700,800'
+	rel='stylesheet' type='text/css'>
+<!--//webfonts-->
+</head>
+<body>
+
+	<!--start-main-->
+	<div class="login-10">
+		<div class="tenth-login">
+			<h4>LOGIN FORM</h4>
+			<form th:action="@{/login}" method="post" class="ten">
+				<div class="fb">
+					<a href="#"><span> </span> <lable>Sign in with Facebook</lable>
+						<div class="clear"></div></a>
+				</div>
+				<p>Or
+				<p>
+				<li class="cream"><input id="username" name="username"
+					type="text" class="text" value="Username"
+					onfocus="this.value = '';"
+					onblur="if (this.value == '') {this.value = 'Username';}"><a
+					href="#" class=" icon10 user10"></a></li>
+				<li class="cream"><input type="password" value="Password"
+					id="password" name="password" onfocus="this.value = '';"
+					onblur="if (this.value == '') {this.value = 'Password';}"><a
+					href="#" class=" icon10 lock10"></a></li>
+				<div class="submit-ten">
+					<input type="submit" onclick="myFunction()" value="Log in">
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

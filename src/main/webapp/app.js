@@ -10,7 +10,7 @@ app.config(['$routeProvider', function ($routeProvider) {
 		controller: 'homeController'
 	})
 	.otherwise({
-		redirectTo: '/login'
+		redirectTo: '/home'
 	})
 }])
 .service('appService', ['$http', function ($http){
@@ -29,7 +29,7 @@ app.config(['$routeProvider', function ($routeProvider) {
 }])
 .controller('loginController',['$scope', 'appService', function ($scope, appService){
 	appService.getUser.then(function(data){
-		
+
 		$scope.users = data.data.users;
 		console.log($scope.users);
 	})
@@ -41,7 +41,7 @@ app.config(['$routeProvider', function ($routeProvider) {
 		for(var i=0; i<users.length; i++){
 			if(users[i].userName == userId && users[i].password == password){
 				console.log("success");
-				window.location.href = '#home'; 
+				window.location.href = '#home';
 				$rootScope.currentUser = users[i];
 				break;
 			}else{
@@ -49,7 +49,7 @@ app.config(['$routeProvider', function ($routeProvider) {
 				$scope.password = undefined;
 			}
 		}
-		
+
 	}
 }])
 .controller('homeController',['$scope', 'appService', function ($scope, appService){
