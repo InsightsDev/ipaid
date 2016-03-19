@@ -3,22 +3,32 @@ package com.cg.apps.ipaid.service.impl;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 
+import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.data.mongodb.gridfs.GridFsOperations;
 import org.springframework.stereotype.Service;
 
+import com.cg.apps.ipaid.entity.Purchase;
 import com.cg.apps.ipaid.logging.Loggable;
 import com.cg.apps.ipaid.request.PurchaseRequest;
 import com.cg.apps.ipaid.service.PurchaseService;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
+import com.mongodb.gridfs.GridFSDBFile;
 
 @Service
 public class PurchaseServiceImpl implements PurchaseService {
 
 	@Autowired
     private GridFsOperations gridOperations;
+	
+	@Autowired
+	private Mapper mapper;
 	
 	@Override
 	@Loggable
@@ -51,5 +61,15 @@ public class PurchaseServiceImpl implements PurchaseService {
         }
 	}
 
-	
+	@Override
+	@Loggable
+	public List<Purchase> fetchPurchaseDetailsByUserId(String userId) {
+		List<GridFSDBFile> results = gridOperations.find(new Query().addCriteria(Criteria.where("metadata.userId").is(userId)));
+		List<Purchase> purchases = new ArrayList<>();
+		for(GridFSDBFile file: results) {
+			Purchase purchase = mapper.map(file, Purchase.class);
+			purchases.add(purchase);
+		}
+		return purchases;
+	}
 }
