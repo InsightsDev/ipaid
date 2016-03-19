@@ -24,13 +24,13 @@
 			<li>{{data.userName}}</li>
 		</ul>
 		<button type="submit" class="btn-submit clear" ng-click="clearData()" ng-show="!!serachData">Clear</button>
-
 	</div>
 	<div class="action">
 		<!-- <form method="POST" enctype="multipart/form-data"> -->
-			<button class='btn-email'>Email</button>
+			<a href="#/email" class='button-email'>Email</a>
 			<input type="file" id="bill" file-model="fileToUpload" onchange="angular.element(this).scope().upload(this)" accept="image/*;capture=camera" style="display: none;"/>
-			<button class="btn-cm" onclick="document.getElementById('bill').click()">Scan</button>
+			<a class="button-scan" onclick="document.getElementById('bill').click()" href="#">Scan</a>
+			<!-- <button class="btn-cm" >Scan</button> -->
 		<!-- </form> -->
 	</div>
 	<div class="graph">

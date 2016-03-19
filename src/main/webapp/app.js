@@ -9,6 +9,10 @@ app.config(['$routeProvider', function ($routeProvider) {
 		templateUrl: 'home/home.html',
 		controller: 'homeController'
 	})
+	.when('/email', {
+		templateUrl: 'email/email.html',
+		controller: 'emailController'
+	})
 	.otherwise({
 		redirectTo: '/home'
 	})
@@ -103,5 +107,15 @@ app.config(['$routeProvider', function ($routeProvider) {
 	}
 	$scope.clickUpload = function(){
 	    angular.element('#bill').trigger('click');
+	}
+	$scope.email = function () {
+		  alert('hi');
+		  $location.path('#/email');
+		};
+}])
+.controller('emailController',['$scope', 'appService', function ($scope, appService){
+	$scope.userName = "testuser1@test.com";
+	$scope.clearData = function () {
+		$scope.serachData = null;
 	}
 }])
