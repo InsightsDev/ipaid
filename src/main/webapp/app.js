@@ -54,10 +54,14 @@ app.config(['$routeProvider', function ($routeProvider) {
 }])
 .controller('homeController',['$scope', 'appService', function ($scope, appService){
 	//$scope.userName = "jack";
+	$scope.bill = null;
 	$scope.displayDetails = function (){
 		appService.getSearchResult.then(function(data){
 			$scope.serachData = data.data.users;
 		})
+	}
+	$scope.upload = function (){
+		console.log($scope.bill);
 	}
 	$scope.clearData = function () {
 		$scope.serachData = null;

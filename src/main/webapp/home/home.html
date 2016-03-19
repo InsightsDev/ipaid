@@ -21,7 +21,8 @@
 	</div>
 	<div class="action">
 		<button class='btn-email'>Email</button>
-		<button class="btn-cm">Scan</button>
+		<input ng-model="bill" ng-click="upload()" class='btn-email' type="file" accept="image/*;capture=camera">Scan
+		<!--<button class="btn-cm">Scan</button>-->
 	</div>
 	<div class="graph">
 		<progress value="22" max="100">
