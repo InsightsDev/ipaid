@@ -29,7 +29,7 @@ import com.cg.apps.ipaid.entity.PurchaseMetaData;
 public class FlipkartEmailParser implements EmailParser {
 
 	private static final Logger LOGGER = LoggerFactory.getLogger(FlipkartEmailParser.class);
-	private static final String INVOICE_FILE_PATH = "/Users/shishirkumar/git/ipaid/tempInvoices";
+	private static final String INVOICE_FILE_PATH = "/Users/shishirkumar/git/ipaid/tempInvoices/";
 
 	@Override
 	public boolean parseEmailInvoice(Message message) {

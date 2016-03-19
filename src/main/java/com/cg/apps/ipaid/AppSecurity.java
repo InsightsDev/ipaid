@@ -18,8 +18,20 @@ public class AppSecurity extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().anyRequest().authenticated().and().formLogin()
-				.and().logout().and().csrf().disable();
+		http.authorizeRequests()
+				.antMatchers("/styles/**", "/libs/**", "/login/**", "/app.js", "/home/**")
+					.permitAll()
+				.anyRequest()
+					.authenticated()
+				.and()
+			.formLogin()
+				.loginPage("/login").permitAll()
+				.and()
+			.logout()
+				.permitAll()
+				.and()
+			.csrf()
+				.disable();
 	}
 
 	@Override
