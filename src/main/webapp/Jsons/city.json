@@ -1,0 +1,14 @@
+{"city": [{
+				"cityName": "Banglore",
+				"id": "1"
+			},{
+				"cityName": "Delhi",
+				"id": "2"
+			},{
+				"cityName": "Kolkata",
+				"id": "3"
+			},{
+				"cityName": "Mumbai",
+				"id": "4"
+			}]
+}

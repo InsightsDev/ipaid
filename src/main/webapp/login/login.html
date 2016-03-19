@@ -1,0 +1,12 @@
+<section id="login" ng-controller="loginController">
+	<form class="loginForm">
+		<h2>Login</h2>
+		<input type="text" class="l-user" placeholder="Enter User Id" ng-model="userId" required>
+		<br/>
+		<br/>
+		<input type="password" class="l-user" placeholder="Enter Password" ng-model="password" required>
+		<br/>
+		<br/>
+		<button type="submit" class="btn-submit" ng-click="validateUser()">Sign In</button>
+	</form>
+</section>

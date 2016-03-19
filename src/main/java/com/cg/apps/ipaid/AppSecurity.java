@@ -15,7 +15,7 @@ public class AppSecurity extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private AppUserDetailsService appUserDetailsService;
-	
+
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.authorizeRequests().anyRequest().authenticated().and().formLogin()
