@@ -60,11 +60,11 @@ public class PurchaseServiceImpl implements PurchaseService {
             }
         }
 	}
-
+	
 	@Override
 	@Loggable
-	public List<Purchase> fetchPurchaseDetailsByUserId(String userId) {
-		List<GridFSDBFile> results = gridOperations.find(new Query().addCriteria(Criteria.where("metadata.userId").is(userId)));
+	public List<Purchase> fetchPurchaseDetails(String key, String value) {
+		List<GridFSDBFile> results = gridOperations.find(new Query().addCriteria(Criteria.where(key).is(value)));
 		List<Purchase> purchases = new ArrayList<>();
 		for(GridFSDBFile file: results) {
 			Purchase purchase = mapper.map(file, Purchase.class);

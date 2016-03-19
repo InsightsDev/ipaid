@@ -27,9 +27,6 @@ public class ServletInitializer extends SpringBootServletInitializer {
 	@Bean(name = "org.dozer.Mapper")
 	public Mapper mapper() {
 		final DozerBeanMapper dozerBean = new DozerBeanMapper();
-		List<String> location = new ArrayList<String>();
-		location.add("mapping-file.xml");
-		dozerBean.setMappingFiles(location);
 		return dozerBean;
 	}
 }
