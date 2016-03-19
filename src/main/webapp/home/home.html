@@ -6,7 +6,15 @@
 		<p>{{userName}}</p>
 	</div>
 	<div class="search-box">
+		<div ng-controller='searchAutoCompleteController'>
+			<live-search id="search1" type="text"
+				  live-search-callback="mySearchCallback"
+				  live-search-item-template="{{result.city}}<strong>{{result.state}}</strong><b>{{result.country}}</b>"
+				  live-search-select="fullName"
+				  ng-model="search1" ></live-search>
+		</div>
 		<form class="searchbox">
+		{{userName}}
 			<input type="text" placeholder="Search...." class="search-txt">
 			<input type="submit" value="" class="btn-search" ng-click="displayDetails()">
 		</form>
@@ -17,7 +25,7 @@
 			<li>{{data.userName}}</li>
 		</ul>
 		<button type="submit" class="btn-submit clear" ng-click="clearData()" ng-show="!!serachData">Clear</button>
-				
+
 	</div>
 	<div class="action">
 		<button class='btn-email'>Email</button>
