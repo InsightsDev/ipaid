@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.dozer.Mapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +18,7 @@ import com.cg.apps.ipaid.entity.Purchase;
 import com.cg.apps.ipaid.logging.Loggable;
 import com.cg.apps.ipaid.ocr.ImageExtractor;
 import com.cg.apps.ipaid.request.PurchaseRequest;
+import com.cg.apps.ipaid.response.PurchaseResponse;
 import com.cg.apps.ipaid.service.PurchaseService;
 
 @RestController
@@ -26,6 +28,9 @@ public class PurchaseController {
 	@Autowired
 	private PurchaseService purchaseService;
 
+	@Autowired
+	private Mapper mapper;
+	
 	@Loggable
 	@RequestMapping(value="/fetchUserPurchases", method = RequestMethod.GET)
     public List<Purchase> fetchPurchaseDetailsForUserId(@RequestParam String user){
@@ -34,15 +39,16 @@ public class PurchaseController {
 	}
 
 	@Loggable
-	@RequestMapping(value="/fetchProductCost", method = RequestMethod.GET)
-    public String fetchProductDetails(@RequestParam String productName){
-		List<Purchase> purchase = purchaseService.fetchPurchaseDetails("metadata.productName", productName);
-		List<Double> costs = new ArrayList<>();
-		for(Purchase p : purchase) {
-			costs.add(p.getMetadata().getProductCost());
+	@RequestMapping(value="/searchProduct", method = RequestMethod.GET)
+    public List<PurchaseResponse> searchProduct(@RequestParam String productName){
+		List<PurchaseResponse> responseList = new ArrayList<>();
+		List<Purchase> purchases = purchaseService.fetchPurchaseDetails("metadata.productName", productName);
+		Collections.sort(purchases);
+		for(int i=0;i<3 && i<purchases.size(); i++) {
+			PurchaseResponse response = mapper.map(purchases.get(i).getMetadata(),PurchaseResponse.class);
+			responseList.add(response);
 		}
-		Collections.sort(costs);
-		return String.format("Best cost for %s is %s", productName,String.valueOf(costs.get(0)));
+		return responseList;
 	}
 
 	@RequestMapping(value="/upload", method=RequestMethod.POST)

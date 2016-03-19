@@ -2,7 +2,7 @@ package com.cg.apps.ipaid.entity;
 
 import java.util.Date;
 
-public class Purchase {
+public class Purchase implements Comparable<Purchase>{
 
 	private String id;	  
 	private PurchaseMetaData metadata;
@@ -73,6 +73,18 @@ public class Purchase {
 	public void setAliases(String aliases) {
 		this.aliases = aliases;
 	}
+	@Override
+	public int compareTo(Purchase o) {
+		if(this.getMetadata().getProductCost() < o.getMetadata().getProductCost()) {
+			return -1;
+		} else if(this.getMetadata().getProductCost() > o.getMetadata().getProductCost()) {
+			return 1;
+		} else {
+			return 0;
+		}
+	}
+	
+	
 	  
 	  
 	 

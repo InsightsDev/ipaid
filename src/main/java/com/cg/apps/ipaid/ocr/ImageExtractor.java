@@ -1,6 +1,7 @@
 package com.cg.apps.ipaid.ocr;
 
 import java.io.File;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -41,7 +42,13 @@ public class ImageExtractor {
 			if(line.contains("Date:")) {
 				purchaseRequest.setPurchaseDate(line.substring(line.indexOf(":")+1,line.length()).trim());
 			}else if (line.contains("Gross Amount")) {
-				purchaseRequest.setProductCost(Double.valueOf(line.substring(line.indexOf("Amount")+7,line.length())));
+				NumberFormat nf = NumberFormat.getInstance();
+				String amt = line.substring(line.indexOf("Amount")+7,line.length());
+				try {
+					purchaseRequest.setProductCost(nf.parse(amt).doubleValue());
+				} catch(Exception e) {
+					e.printStackTrace();
+				}
 			} else if(line.contains("Bill")) {
 				purchaseRequest.setInvoiceNo(line.substring(line.indexOf(":")+1,line.indexOf("Time")-1).trim());
 			}

@@ -82,7 +82,7 @@ public class PurchaseServiceImpl implements PurchaseService {
 		return mongoTemplate.getCollection("fs.files").distinct("productName");
 	}
 
-	public List<Purchase> fetchHotTrends() {
-		List<GridFSDBFile> results = gridOperations.find(new Query().addCriteria(Criteria.where(key).is(value)));
-	}
+//	public List<Purchase> fetchHotTrends() {
+//		List<GridFSDBFile> results = gridOperations.find(new Query().addCriteria(Criteria.where(key).is(value)));
+//	}
 }
