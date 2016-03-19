@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.cg.apps.ipaid.request.PurchaseRequest;
+import com.cg.apps.ipaid.response.PurchaseResponse;
 
 import net.sourceforge.tess4j.ITesseract;
 import net.sourceforge.tess4j.Tesseract;
@@ -24,8 +24,8 @@ public class ImageExtractor {
         return result;
 	}
 	
-	public PurchaseRequest processExtractedText(String extractedText) {
-		PurchaseRequest purchaseRequest = new PurchaseRequest();
+	public PurchaseResponse processExtractedText(String extractedText) {
+		PurchaseResponse purchaseRequest = new PurchaseResponse();
 		String[] lines = extractedText.split("\\r?\\n");
 		List<String> list = new ArrayList<String>(Arrays.asList(lines));
 		list.removeAll(Arrays.asList("",null));

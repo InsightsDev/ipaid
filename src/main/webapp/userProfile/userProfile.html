@@ -1,0 +1,76 @@
+<section id="userView" ng-controller="userProfileController">
+	<div class="user-section">
+		<figure>
+			<img src={{user.image}} class='user-img'>
+		</figure>
+	</div>
+	<div align="center" class="#userView">
+		<table class="rwd-table">
+			<tr>
+				<td><output class="body">First Name</output></td>
+				<td><output class="body">{{user.firstName}}</output></td>
+			</tr>
+			<tr>
+				<td><output class="body">Last Name</output></td>
+				<td><output class="body">{{user.lastName}}</output></td>
+			</tr>
+			<tr>
+				<td><output class="body">Registered Email-Id</output></td>
+				<td><output class="body">{{user.emailId}}</output></td>
+			</tr>
+			<tr>
+				<td><output class="body">Registered Phone Number</output></td>
+				<td><output class="body">{{user.phoneNumber}}</output></td>
+			</tr>
+		</table>
+		<button type="submit" class="btn-submit">Edit Profile</button>
+	</div>
+
+	<table ng-repeat="purchase in purchases">
+		<tr>{{purchase.productName}}</tr>
+		<tr>{{purchase.location}}</tr>
+		<tr>{{purchase.productCost}}</tr>
+	</table>
+	
+	<table class="table table-striped table-condensed table-hover">
+            <thead>
+                <tr>
+                   <th ng-repeat="header in table_headers"  
+                     class="{{header.name}}" custom-sort order="header.name" sort="sort"
+                    >{{ header.name }}
+
+                        </th> 
+                  </tr>
+            </thead>
+            <tfoot>
+                <td colspan="6">
+                    <div class="pagination pull-right">
+                        <ul>
+                            <li ng-class="{disabled: currentPage == 0}">
+                                <a href ng-click="prevPage()">« Prev</a>
+                            </li>
+
+                            <li ng-repeat="n in range(pagedItems.length, currentPage, currentPage + gap) "
+                                ng-class="{active: n == currentPage}"
+                            ng-click="setPage()">
+                                <a href ng-bind="n + 1">1</a>
+                            </li>
+
+                            <li ng-class="{disabled: (currentPage) == pagedItems.length - 1}">
+                                <a href ng-click="nextPage()">Next »</a>
+                            </li>
+                        </ul>
+                    </div>
+                </td>
+            </tfoot>
+            <pre>pagedItems.length: {{pagedItems.length|json}}</pre>
+            <pre>currentPage: {{currentPage|json}}</pre>
+            <pre>currentPage: {{sort|json}}</pre>
+            <tbody>
+
+                <tr ng-repeat="item in pagedItems[currentPage] | orderBy:sort.sortingOrder:sort.reverse">
+                     <td ng-repeat="val in item" ng-bind-html-unsafe="item[table_headers[$index].name]"></td>
+                </tr>
+            </tbody>
+        </table>
+</section>

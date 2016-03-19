@@ -1,5 +1,8 @@
 package com.cg.apps.ipaid;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.dozer.DozerBeanMapper;
 import org.dozer.Mapper;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
@@ -24,6 +27,9 @@ public class ServletInitializer extends SpringBootServletInitializer {
 	@Bean(name = "org.dozer.Mapper")
 	public Mapper mapper() {
 		final DozerBeanMapper dozerBean = new DozerBeanMapper();
+		List<String> mappingFileUrls = new ArrayList<String>();
+		mappingFileUrls.add("mapping.xml");
+		dozerBean.setMappingFiles(mappingFileUrls);
 		return dozerBean;
 	}
 }

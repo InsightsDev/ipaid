@@ -9,6 +9,10 @@ app.config(['$routeProvider', function ($routeProvider) {
 		templateUrl: 'home/home.html',
 		controller: 'homeController'
 	})
+	.when('/userProfile', {
+		templateUrl: 'userProfile/userProfile.html',
+		controller: 'userProfileController'
+	})
 	.otherwise({
 		redirectTo: '/home'
 	})
@@ -16,7 +20,7 @@ app.config(['$routeProvider', function ($routeProvider) {
 .service('appService', ['$http', function ($http){
 	this.getUser = $http({
 	  					method: 'GET',
-	  					url: 'Jsons/user.json'
+	  					url: 'user/'
 					});
 	this.getCity = $http({
 					   	method: 'GET',
@@ -53,7 +57,8 @@ app.config(['$routeProvider', function ($routeProvider) {
 	}
 }])
 .controller('homeController',['$scope', 'appService', function ($scope, appService){
-	//$scope.userName = "jack";
+	// $scope.userName = "jack";
+	$scope.image = $scope.image;
 	$scope.bill = null;
 	$scope.displayDetails = function (){
 		appService.getSearchResult.then(function(data){
@@ -66,4 +71,20 @@ app.config(['$routeProvider', function ($routeProvider) {
 	$scope.clearData = function () {
 		$scope.serachData = null;
 	}
+	
+	appService.getUser.then(function(data) {
+		console.log(data.data);
+		$scope.user = data.data;
+	});
+	
+}])
+.controller('userProfileController',['$scope', 'appService', function ($scope, appService) {
+	
+	appService.getUser.then(function(data) {
+		
+		$scope.user = data.data;
+		$scope.purchases=data.data.purchases;
+		console.log(data.data.purchases);
+	});
+	
 }])

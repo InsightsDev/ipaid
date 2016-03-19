@@ -1,9 +1,11 @@
 <section id="userView" ng-controller="homeController">
 	<div class="user-section">
 		<figure>
-			<img src='./styles/images/guy.jpg' class='user-img'>
+		<a href="#/userProfile" >
+			<img src={{user.image}} class='user-img'>
+		</a>
 		</figure>
-		<p>{{userName}}</p>
+		<p>{{user.firstName}}</p>
 	</div>
 	<div class="search-box">
 		<form class="searchbox">

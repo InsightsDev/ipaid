@@ -1,9 +1,10 @@
-package com.cg.apps.ipaid.request;
+package com.cg.apps.ipaid.response;
 
 import java.io.File;
 
-public class PurchaseRequest {
+public class PurchaseResponse {
 
+	private String id;
 	private String productName;
 	private String invoiceNo;
 	private Double productCost;
@@ -13,6 +14,12 @@ public class PurchaseRequest {
 	private String userId;
 	private String purchaseDate;
 	private File bill;
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
 	public String getProductName() {
 		return productName;
 	}

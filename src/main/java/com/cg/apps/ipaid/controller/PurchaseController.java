@@ -13,10 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.cg.apps.ipaid.entity.Purchase;
 import com.cg.apps.ipaid.logging.Loggable;
 import com.cg.apps.ipaid.ocr.ImageExtractor;
-import com.cg.apps.ipaid.request.PurchaseRequest;
+import com.cg.apps.ipaid.response.PurchaseResponse;
 import com.cg.apps.ipaid.service.PurchaseService;
 
 @RestController
@@ -28,18 +27,18 @@ public class PurchaseController {
 	
 	@Loggable
 	@RequestMapping(value="/fetchUserPurchases", method = RequestMethod.GET)
-    public List<Purchase> fetchPurchaseDetailsForUserId(@RequestParam String user){ 
-		List<Purchase> purchase = purchaseService.fetchPurchaseDetails("metadata.userId", user);
+    public List<PurchaseResponse> fetchPurchaseDetailsForUserId(@RequestParam String user){ 
+		List<PurchaseResponse> purchase = purchaseService.fetchPurchaseDetails("metadata.userId", user);
 		return purchase;
 	}
 	
 	@Loggable
 	@RequestMapping(value="/fetchProductCost", method = RequestMethod.GET)
     public String fetchProductDetails(@RequestParam String productName){ 
-		List<Purchase> purchase = purchaseService.fetchPurchaseDetails("metadata.productName", productName);
+		List<PurchaseResponse> purchase = purchaseService.fetchPurchaseDetails("metadata.productName", productName);
 		List<Double> costs = new ArrayList<>();
-		for(Purchase p : purchase) {
-			costs.add(p.getMetadata().getProductCost());
+		for(PurchaseResponse p : purchase) {
+			costs.add(p.getProductCost());
 		}
 		Collections.sort(costs);
 		return String.format("Best cost for %s is %s", productName,String.valueOf(costs.get(0)));
@@ -58,7 +57,7 @@ public class PurchaseController {
 			e.printStackTrace();
 		}
 		ImageExtractor processor = new ImageExtractor();
-		PurchaseRequest request = processor.processExtractedText(processor.extractTextFromImage(convFile));
+		PurchaseResponse request = processor.processExtractedText(processor.extractTextFromImage(convFile));
 		request.setBill(convFile);
 		request.setUserId(user);
 		purchaseService.savePurchase(request);
