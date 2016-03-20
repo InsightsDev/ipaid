@@ -1,0 +1,31 @@
+{
+  "deals": [
+    {
+      "productName": "Sony Headphones",
+      "storeSales": [
+        {
+          "storeName": "Swift Spire Innovations Pvt. Ltd.,",
+          "sales": 6
+        }
+      ]
+    },
+    {
+      "productName": "Macbook Pro",
+      "storeSales": [
+        {
+          "storeName": "LAPTECH SOLUTIONS PRIVATE LIMITED",
+          "sales": 3
+        }
+      ]
+    },
+    {
+      "productName": "Apple iPhone 6S 64GB Gold",
+      "storeSales": [
+        {
+          "storeName": "Chroma Retail",
+          "sales": 1
+        }
+      ]
+    }
+  ]
+}
