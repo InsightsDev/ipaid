@@ -24,9 +24,9 @@
 
 	</div>
 	<div class="search-result">
-		<div ng-repeat="data in serachData" class="w3-card-12 w3-margin"
+		<div ng-repeat="data in serachData" class="w3-card-12 search-margin"
 			style="width: 94%" ng-class="{searchDiv0:$index == 0, searchDiv1: $index == 1 , searchDiv2: $index == 2 }">
-			<div class="w3-container" style="padding: 10px;" >
+			<div class="w3-container" style="padding: 10px;">
 				<p ng-if="$index == 0">Best price for {{data.productName}} is </p>
 				<p ng-if="$index == 1">2nd Best price for {{data.productName}} is </p>
 				<p ng-if="$index == 2">{{data.productName}} is also available for </p>
@@ -40,12 +40,14 @@
 	</div>
 	<div class="action">
 		<!-- <form method="POST" enctype="multipart/form-data"> -->
-		<a href="#/email" class='button-email'>Email</a> <input type="file"
+		<a href="#/email" class='button-email'>Email</a>
+		<a class="button-hotdeals" href="#">Hot Deals</a>
+		<a class="button-scan" onclick="document.getElementById('bill').click()"
+			href="#">Scan</a>
+			<input type="file"
 			id="bill" file-model="fileToUpload"
 			onchange="angular.element(this).scope().upload(this)"
-			accept="image/*;capture=camera" style="display: none;" /> <a
-			class="button-scan" onclick="document.getElementById('bill').click()"
-			href="#">Scan</a>
+			accept="image/*;capture=camera" style="display: none;" />
 		<!-- <button class="btn-cm" >Scan</button> -->
 		<!-- </form> -->
 	</div>

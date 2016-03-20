@@ -130,7 +130,7 @@ app.config(['$routeProvider', function ($routeProvider) {
 	});
 }])
 .controller('emailController',['$scope', 'appService', function ($scope, appService){
-	$scope.userName = "testuser1@test.com";
+	$scope.image = $scope.image;
 	$scope.clearData = function () {
 		$scope.serachData = null;
 	}
@@ -140,4 +140,8 @@ app.config(['$routeProvider', function ($routeProvider) {
 	$scope.email = function () {
 		  $location.path('#/email');
 		};
+	appService.getUser.then(function(data) {
+		console.log(data.data);
+		$scope.user = data.data;
+	});
 }])
