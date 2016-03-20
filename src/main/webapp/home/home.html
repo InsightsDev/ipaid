@@ -5,7 +5,7 @@
 			<img src={{user.image}} class='user-img'>
 		</a>
 		</figure>
-		<p>Hello <strong>{{user.firstName}}</strong>, you've <strong>{{user.totalExpenditure}}</strong> credit points to redeem!</p>
+		<p>Hello <strong>{{user.firstName}}</strong>, you've <strong>{{user.totalExpenditure | number:0}}</strong> credit points to redeem!</p>
 		<p></p>
 	</div>
 	<div class="search-box">
@@ -55,8 +55,8 @@
 		<div ng-repeat="data in hotDeals" class="w3-card-12 search-margin"
 			style="width: 94%" ng-class="{searchDiv0:$index == 0, searchDiv1: $index == 1 , searchDiv2: $index == 2 }">
 			<div class="w3-container" style="padding: 10px;">
-				<p style="font-size:30px;color:aliceblue"><strong>{{data.storeSales[0].sales}}</strong></p>
-				<p>shopper(s) have bought <strong>{{data.productName}} from</strong>
+				<p style="font-size:30px;color:aliceblue;"><strong>{{data.storeSales[0].sales}}</strong></p>
+				<p>shopper(s) have bought <strong>{{data.productName}}</strong> from
 				<p style="font-size:20px;color:aliceblue"><strong>{{data.storeSales[0].storeName}}</strong></p>
 				<p  style="font-size:12px;color:aliceblue"><em>Grab the deal before it ends!</em></p>
 			</div>
