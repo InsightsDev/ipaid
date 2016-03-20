@@ -18,6 +18,7 @@ import com.cg.apps.ipaid.logging.Loggable;
 import com.cg.apps.ipaid.ocr.ImageExtractor;
 import com.cg.apps.ipaid.response.PurchaseRequest;
 import com.cg.apps.ipaid.response.PurchaseResponse;
+import com.cg.apps.ipaid.response.PurchaseResponseWrapper;
 import com.cg.apps.ipaid.service.PurchaseService;
 
 @RestController
@@ -38,10 +39,12 @@ public class PurchaseController {
 	}
 
 	@RequestMapping(value="/searchProduct", method = RequestMethod.GET)
-    public List<PurchaseResponse> searchProduct(@RequestParam String productName){
+    public PurchaseResponseWrapper searchProduct(@RequestParam String productName){
 		List<PurchaseResponse> purchases = purchaseService.fetchPurchaseDetails("metadata.productName", productName);
 		Collections.sort(purchases);
-		return purchases;
+		PurchaseResponseWrapper products = new PurchaseResponseWrapper();
+		products.setProducts(purchases);
+		return products;
 	}
 
 	@RequestMapping(value="/upload", method=RequestMethod.POST)
