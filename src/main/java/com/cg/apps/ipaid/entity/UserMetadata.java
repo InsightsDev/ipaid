@@ -7,6 +7,7 @@ public class UserMetadata {
 	private String emailId;
 	private String password;
 	private Long phoneNumber;
+	private Double totalExpenditure;
 	private boolean verified;
 
 	public String getFirstName() {
@@ -57,4 +58,12 @@ public class UserMetadata {
 		this.verified = verified;
 	}
 
+	public Double getTotalExpenditure() {
+		return totalExpenditure;
+	}
+
+	public void setTotalExpenditure(Double totalExpenditure) {
+		this.totalExpenditure = totalExpenditure;
+	}
+	
 }
