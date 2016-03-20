@@ -73,7 +73,6 @@ app.config([ '$routeProvider', function($routeProvider) {
 				'appService',
 				function($scope, appService) {
 					appService.getUser.then(function(data) {
-
 						$scope.users = data.data.users;
 						console.log($scope.users);
 					})
@@ -110,11 +109,6 @@ app.config([ '$routeProvider', function($routeProvider) {
 					$scope.serachData = data.data.products;
 				})
 			}
-			appService.displayHotDeals = function() {
-				appService.getHotDeals().then(function(data) {
-					$scope.hotDeals = data.data.deals;
-				})
-			}
 			$scope.upload = function(element) {
 				var file = element.files[0];
 				var userName = $scope.userName;
@@ -137,7 +131,9 @@ app.config([ '$routeProvider', function($routeProvider) {
 				console.log(data.data);
 				$scope.user = data.data;
 			});
-
+			appService.getHotDeals().then(function(data) {
+					$scope.hotDeals = data.data.deals;
+			});
 		} ]).controller('userProfileController',
 		[ '$scope', 'appService', function($scope, appService) {
 			appService.getUser.then(function(data) {

@@ -5,7 +5,7 @@
 			<img src={{user.image}} class='user-img'>
 		</a>
 		</figure>
-		<p>Hello <strong>{{user.firstName}}</strong>, you've <strong>1972</strong> credit points to redeem!</p>
+		<p>Hello <strong>{{user.firstName}}</strong>, you've <strong>{{user.totalExpenditure}}</strong> credit points to redeem!</p>
 		<p></p>
 	</div>
 	<div class="search-box">
@@ -61,10 +61,11 @@
 				<p  style="font-size:12px;color:aliceblue"><em>Grab the deal before it ends!</em></p>
 			</div>
 		</div>
-		<button type="submit" class="btn-submit clear" ng-click="clearDeals()"
-			ng-show="!!hotDeals">Close Deals</button>
+		<!-- <button type="submit" class="btn-submit clear" ng-click="clearDeals()"
+			ng-show="!!hotDeals">Close Deals</button> -->
 	</div>
 	<div class="graph">
+		<h2 style="text-align:left">My Reports</h2>
 		Expenditure on electronics in Bangalore <progress value="22" max="100"> </progress>
 		Points redeemed till date <progress value="50" max="100"> </progress>
 		Money saved with iPaid <progress value="75" max="100"> </progress>
