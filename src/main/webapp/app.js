@@ -48,7 +48,7 @@ app.config(['$routeProvider', function ($routeProvider) {
 	this.getSearchResult = function(productName) {
 					return $http({
 						method: 'GET',
-						url: 'purchase/fetchProductCost',
+						url: 'Jsons/search.json',
 						params: {productName: productName}
 					});
 	}
@@ -98,7 +98,7 @@ app.config(['$routeProvider', function ($routeProvider) {
 	$scope.displayDetails = function (){
 		productName = $scope.productName
 		appService.getSearchResult(productName).then(function(data){
-			$scope.serachData = data.data.users;
+			$scope.serachData = data.data.products;
 		})
 	}
 	$scope.upload = function (element){
@@ -110,25 +110,27 @@ app.config(['$routeProvider', function ($routeProvider) {
 	$scope.clearData = function () {
 		$scope.serachData = null;
 	}
-	
+	$scope.clickUpload = function(){
+	    angular.element('#bill').trigger('click');
+	}
+	$scope.email = function () {
+		  $location.path('#/email');
+		};
 	appService.getUser.then(function(data) {
 		console.log(data.data);
 		$scope.user = data.data;
 	});
-	
+
 }])
 .controller('userProfileController',['$scope', 'appService', function ($scope, appService) {
-	
 	appService.getUser.then(function(data) {
-		
 		$scope.user = data.data;
 		$scope.purchases=data.data.purchases;
 		console.log(data.data.purchases);
 	});
-	
 }])
 .controller('emailController',['$scope', 'appService', function ($scope, appService){
-	$scope.userName = "testuser1@test.com";
+	$scope.image = $scope.image;
 	$scope.clearData = function () {
 		$scope.serachData = null;
 	}
@@ -138,4 +140,8 @@ app.config(['$routeProvider', function ($routeProvider) {
 	$scope.email = function () {
 		  $location.path('#/email');
 		};
+	appService.getUser.then(function(data) {
+		console.log(data.data);
+		$scope.user = data.data;
+	});
 }])

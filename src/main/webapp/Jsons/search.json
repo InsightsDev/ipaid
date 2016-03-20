@@ -1,14 +1,37 @@
-{"users": [{
-				"userName": "Jack_smith",
-				"password": "Jack123"
-			},{
-				"userName": "John_arrow",
-				"password": "John123"
-			},{
-				"userName": "Luis_crow",
-				"password": "Luis123"
-			},{
-				"userName": "Rakesh_D",
-				"password": "Rakesh123"
-			}]
+{
+  "products": [
+    {
+      "productName": "Sony Headphones",
+      "invoiceNo": "BlL-OOOOO4-OOOO7748",
+      "productCost": 741,
+      "productCode": null,
+      "location": "Haryana",
+      "storeName": "Swift Spire Innovations Pvt. Ltd.,",
+      "userId": null,
+      "purchaseDate": "16-03-2016",
+      "rank": null
+    },
+    {
+      "productName": "Sony Headphones",
+      "invoiceNo": "BlL-OOOOO4-OOOO7749",
+      "productCost": 780,
+      "productCode": null,
+      "location": "Pune",
+      "storeName": "Peripherals Innovations Pvt. Ltd.,",
+      "userId": "arunmohan@apple.com",
+      "purchaseDate": "16-03-2016",
+      "rank": null
+    },
+    {
+      "productName": "Sony Headphones",
+      "invoiceNo": "BlL-OOOOO4-OOOO7750",
+      "productCost": 830,
+      "productCode": null,
+      "location": "Bangalore",
+      "storeName": "Gadgets Pvt. Ltd.,",
+      "userId": "arunmohan@apple.com",
+      "purchaseDate": "16-03-2016",
+      "rank": null
+    }
+  ]
 }

@@ -16,31 +16,44 @@
 				  ng-model="search1" ></live-search>
 		</div> -->
 		<form class="searchbox">
-			<input type="text" name="productName" ng-model="productName" placeholder="Search...." class="search-txt">
-			<input type="submit" value="" class="btn-search" ng-click="displayDetails()">
+			<input type="text" name="productName" ng-model="productName"
+				placeholder="Search...." class="search-txt"> <input
+				type="submit" value="" class="btn-search"
+				ng-click="displayDetails()">
 		</form>
 
 	</div>
 	<div class="search-result">
-		<ul ng-repeat="data in serachData">
-			<li>{{data.userName}}</li>
-		</ul>
-		<button type="submit" class="btn-submit clear" ng-click="clearData()" ng-show="!!serachData">Clear</button>
+		<div ng-repeat="data in serachData" class="w3-card-12 search-margin"
+			style="width: 94%" ng-class="{searchDiv0:$index == 0, searchDiv1: $index == 1 , searchDiv2: $index == 2 }">
+			<div class="w3-container" style="padding: 10px;">
+				<p ng-if="$index == 0">Best price for {{data.productName}} is </p>
+				<p ng-if="$index == 1">2nd Best price for {{data.productName}} is </p>
+				<p ng-if="$index == 2">{{data.productName}} is also available for </p>
+				<h2>{{data.productCost | currency:"&#8377;"}}</h2>
+				<p> at <strong>{{data.storeName}}</strong></p>
+				<p>in <strong>{{data.location}}</strong></p>
+			</div>
+		</div>
+		<button type="submit" class="btn-submit clear" ng-click="clearData()"
+			ng-show="!!serachData">Clear Search</button>
 	</div>
 	<div class="action">
 		<!-- <form method="POST" enctype="multipart/form-data"> -->
-			<a href="#/email" class='button-email'>Email</a>
-			<input type="file" id="bill" file-model="fileToUpload" onchange="angular.element(this).scope().upload(this)" accept="image/*;capture=camera" style="display: none;"/>
-			<a class="button-scan" onclick="document.getElementById('bill').click()" href="#">Scan</a>
-			<!-- <button class="btn-cm" >Scan</button> -->
+		<a href="#/email" class='button-email'>Email</a>
+		<a class="button-hotdeals" href="#">Hot Deals</a>
+		<a class="button-scan" onclick="document.getElementById('bill').click()"
+			href="#">Scan</a>
+			<input type="file"
+			id="bill" file-model="fileToUpload"
+			onchange="angular.element(this).scope().upload(this)"
+			accept="image/*;capture=camera" style="display: none;" />
+		<!-- <button class="btn-cm" >Scan</button> -->
 		<!-- </form> -->
 	</div>
 	<div class="graph">
-		<progress value="22" max="100">
-		</progress>
-		<progress value="50" max="100">
-		</progress>
-		<progress value="75" max="100">
-		</progress>
+		<progress value="22" max="100"> </progress>
+		<progress value="50" max="100"> </progress>
+		<progress value="75" max="100"> </progress>
 	</div>
-<section>
+	<section>
