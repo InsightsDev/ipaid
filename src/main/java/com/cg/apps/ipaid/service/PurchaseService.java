@@ -2,6 +2,7 @@ package com.cg.apps.ipaid.service;
 
 import java.util.List;
 
+import com.cg.apps.ipaid.entity.TrendResponse;
 import com.cg.apps.ipaid.response.PurchaseRequest;
 import com.cg.apps.ipaid.response.PurchaseResponse;
 
@@ -12,4 +13,6 @@ public interface PurchaseService {
 	public void savePurchase(PurchaseRequest purchaseRequest);
 
 	List<String> fetchDistinctProductNames();
+	
+	List<TrendResponse> fetchHotTrends();
 }
