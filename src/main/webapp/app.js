@@ -116,7 +116,6 @@ app.config([ '$routeProvider', function($routeProvider) {
 				})
 			}
 			$scope.upload = function(element) {
-				alert('hi');
 				var file = element.files[0];
 				var userName = $scope.userName;
 				var uploadUrl = 'purchase/upload';
@@ -124,6 +123,9 @@ app.config([ '$routeProvider', function($routeProvider) {
 			}
 			$scope.clearData = function() {
 				$scope.serachData = null;
+			}
+			$scope.clearDeals = function() {
+				$scope.hotDeals = null;
 			}
 			$scope.clickUpload = function() {
 				angular.element('#bill').trigger('click');

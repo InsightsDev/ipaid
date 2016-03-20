@@ -359,7 +359,7 @@ h1 {
 	display: inline-block;
 	text-align: center;
 	vertical-align: middle;
-	padding: 12px 24px;
+	padding: 12px 0px;
 	border: 1px solid #3e7ac4;
 	border-radius: 4px;
 	background: #65c7ff;
@@ -368,7 +368,7 @@ h1 {
 	background: -moz-linear-gradient(top, #65c7ff, #3e7ac4);
 	background: linear-gradient(to bottom, #65c7ff, #3e7ac4);
 	text-shadow: #274d7b 1px 1px 1px;
-	font: normal normal bold 19px lato;
+	font: normal normal bold 80% lato;
 	color: #ffffff;
 	text-decoration: none;
 	margin-left: 6%;
@@ -412,7 +412,7 @@ h1 {
 	display: inline-block;
 	text-align: center;
 	vertical-align: middle;
-	padding: 12px 24px;
+	padding: 12px 12px;
 	border: 1px solid #3e7ac4;
 	border-radius: 4px;
 	background: #65c7ff;
@@ -421,7 +421,7 @@ h1 {
 	background: -moz-linear-gradient(top, #65c7ff, #3e7ac4);
 	background: linear-gradient(to bottom, #65c7ff, #3e7ac4);
 	text-shadow: #274d7b 1px 1px 1px;
-	font: normal normal bold 19px lato;
+	font: normal normal bold 80% lato;
 	color: #ffffff;
 	text-decoration: none;
 	margin-right: 3%;
@@ -653,7 +653,7 @@ h1 {
     display: inline-block;
     text-align: center;
     vertical-align: middle;
-    padding: 12px 24px;
+    padding: 12px 5px;
     border: 1px solid #a12727;
     border-radius: 4px;
     background: #ff4a4a;
@@ -661,7 +661,7 @@ h1 {
     background: -moz-linear-gradient(top, #ff4a4a, #992727);
     background: linear-gradient(to bottom, #ff4a4a, #992727);
     text-shadow: #591717 1px 1px 1px;
-    font: normal normal bold 20px lato;
+    font: normal normal bold 80% lato;
     color: #ffffff;
     text-decoration: none;
     margin-right: -3%;

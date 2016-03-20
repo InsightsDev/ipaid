@@ -41,7 +41,7 @@
 	<div class="action">
 		<!-- <form method="POST" enctype="multipart/form-data"> -->
 		<a href="#/email" class='button-email'>Email</a>
-		<a class="button-hotdeals" href="#" ng-click="displayHotDeals()">Hot Deals</a>
+		<button class="button-hotdeals" ng-click="displayHotDeals()">Hot Deals</button>
 		<button class="button-scan" onclick="document.getElementById('bill').click()">Scan</button>
 		<input type="file"
 			id="bill" file-model="fileToUpload"
@@ -54,16 +54,14 @@
 		<div ng-repeat="data in hotDeals" class="w3-card-12 search-margin"
 			style="width: 94%" ng-class="{searchDiv0:$index == 0, searchDiv1: $index == 1 , searchDiv2: $index == 2 }">
 			<div class="w3-container" style="padding: 10px;">
-				<p ng-if="$index == 0">Best price for {{data.productName}} is </p>
-				<p ng-if="$index == 1">2nd Best price for {{data.productName}} is </p>
-				<p ng-if="$index == 2">{{data.productName}} is also available for </p>
-				<h2>{{data.productCost | currency:"&#8377;"}}</h2>
-				<p> at <strong>{{data.storeName}}</strong></p>
-				<p>in <strong>{{data.location}}</strong></p>
+				<p style="font-size:30px;color:aliceblue"><strong>{{data.storeSales[0].sales}}</strong></p>
+				<p>shopper(s) have bought <strong>{{data.productName}} from</strong>
+				<p style="font-size:20px;color:aliceblue"><strong>{{data.storeSales[0].storeName}}</strong></p>
+				<p  style="font-size:12px;color:aliceblue"><em>Grab the deal before it ends!</em></p>
 			</div>
 		</div>
 		<button type="submit" class="btn-submit clear" ng-click="clearData()"
-			ng-show="!!serachData">Clear Search</button>
+			ng-show="!!hotDeals">Close Deals</button>
 	</div>
 	<div class="graph">
 		<progress value="22" max="100"> </progress>
