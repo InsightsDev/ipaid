@@ -2,7 +2,6 @@ package com.cg.apps.ipaid.controller;
 
 import java.io.File;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -14,10 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.cg.apps.ipaid.entity.Purchase;
 import com.cg.apps.ipaid.logging.Loggable;
 import com.cg.apps.ipaid.ocr.ImageExtractor;
-import com.cg.apps.ipaid.request.PurchaseRequest;
+import com.cg.apps.ipaid.response.PurchaseRequest;
 import com.cg.apps.ipaid.response.PurchaseResponse;
 import com.cg.apps.ipaid.service.PurchaseService;
 
@@ -33,22 +31,16 @@ public class PurchaseController {
 	
 	@Loggable
 	@RequestMapping(value="/fetchUserPurchases", method = RequestMethod.GET)
-    public List<Purchase> fetchPurchaseDetailsForUserId(@RequestParam String user){
-		List<Purchase> purchase = purchaseService.fetchPurchaseDetails("metadata.userId", user);
+    public List<PurchaseResponse> fetchPurchaseDetailsForUserId(@RequestParam String user){ 
+		List<PurchaseResponse> purchase = purchaseService.fetchPurchaseDetails("metadata.userId", user);
 		return purchase;
 	}
 
-	@Loggable
 	@RequestMapping(value="/searchProduct", method = RequestMethod.GET)
     public List<PurchaseResponse> searchProduct(@RequestParam String productName){
-		List<PurchaseResponse> responseList = new ArrayList<>();
-		List<Purchase> purchases = purchaseService.fetchPurchaseDetails("metadata.productName", productName);
+		List<PurchaseResponse> purchases = purchaseService.fetchPurchaseDetails("metadata.productName", productName);
 		Collections.sort(purchases);
-		for(int i=0;i<3 && i<purchases.size(); i++) {
-			PurchaseResponse response = mapper.map(purchases.get(i).getMetadata(),PurchaseResponse.class);
-			responseList.add(response);
-		}
-		return responseList;
+		return purchases;
 	}
 
 	@RequestMapping(value="/upload", method=RequestMethod.POST)

@@ -9,6 +9,10 @@ app.config(['$routeProvider', function ($routeProvider) {
 		templateUrl: 'home/home.html',
 		controller: 'homeController'
 	})
+	.when('/userProfile', {
+		templateUrl: 'userProfile/userProfile.html',
+		controller: 'userProfileController'
+	})
 	.when('/email', {
 		templateUrl: 'email/email.html',
 		controller: 'emailController'
@@ -35,7 +39,7 @@ app.config(['$routeProvider', function ($routeProvider) {
 .service('appService', ['$http', function ($http){
 	this.getUser = $http({
 	  					method: 'GET',
-	  					url: 'Jsons/user.json'
+	  					url: 'user/'
 					});
 	this.getCity = $http({
 					   	method: 'GET',
@@ -88,8 +92,9 @@ app.config(['$routeProvider', function ($routeProvider) {
 	}
 }])
 .controller('homeController',['$scope', 'appService', function ($scope, appService){
+	$scope.image = $scope.image;
+	$scope.bill = null;
 	$scope.userName = "testuser1@test.com";
-	//$scope.bill = null;
 	$scope.displayDetails = function (){
 		productName = $scope.productName
 		appService.getSearchResult(productName).then(function(data){
@@ -111,10 +116,28 @@ app.config(['$routeProvider', function ($routeProvider) {
 	$scope.email = function () {
 		  $location.path('#/email');
 		};
+	appService.getUser.then(function(data) {
+		console.log(data.data);
+		$scope.user = data.data;
+	});
+
+}])
+.controller('userProfileController',['$scope', 'appService', function ($scope, appService) {
+	appService.getUser.then(function(data) {
+		$scope.user = data.data;
+		$scope.purchases=data.data.purchases;
+		console.log(data.data.purchases);
+	});
 }])
 .controller('emailController',['$scope', 'appService', function ($scope, appService){
 	$scope.userName = "testuser1@test.com";
 	$scope.clearData = function () {
 		$scope.serachData = null;
 	}
+	$scope.clickUpload = function(){
+	    angular.element('#bill').trigger('click');
+	}
+	$scope.email = function () {
+		  $location.path('#/email');
+		};
 }])

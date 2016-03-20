@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+ xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+ <mapping>
+  <class-a>com.cg.apps.ipaid.response.PurchaseResponse</class-a>
+  <class-b>com.cg.apps.ipaid.entity.Purchase</class-b>
+  <field>
+  	<a>productName</a>
+  	<b>metadata.productName</b>
+  </field>
+  <field>
+  	<a>invoiceNo</a>
+  	<b>metadata.invoiceNo</b>
+  </field>
+  <field>
+  	<a>productCost</a>
+  	<b>metadata.productCost</b>
+  </field>
+  <field>
+  	<a>productCode</a>
+  	<b>metadata.productCode</b>
+  </field>
+  <field>
+  	<a>location</a>
+  	<b>metadata.location</b>
+  </field>
+  <field>
+  	<a>storeName</a>
+  	<b>metadata.storeName</b>
+  </field>
+  <field>
+  	<a>userId</a>
+  	<b>metadata.userId</b>
+  </field>
+  <field>
+  	<a>purchaseDate</a>
+  	<b>metadata.purchaseDate</b>
+  </field>
+ </mapping>
+</mappings>

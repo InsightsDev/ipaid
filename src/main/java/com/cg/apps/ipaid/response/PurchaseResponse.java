@@ -1,10 +1,7 @@
 package com.cg.apps.ipaid.response;
 
-import java.util.List;
 
-import com.cg.apps.ipaid.entity.Purchase;
-
-public class PurchaseResponse {
+public class PurchaseResponse implements Comparable<PurchaseResponse> {
 	
 	private String productName;
 	private String invoiceNo;
@@ -68,6 +65,11 @@ public class PurchaseResponse {
 	}
 	public void setRank(Integer rank) {
 		this.rank = rank;
+	}
+	@Override
+	public int compareTo(PurchaseResponse o) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	

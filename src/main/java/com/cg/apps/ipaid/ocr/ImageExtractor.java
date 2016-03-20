@@ -6,11 +6,11 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import com.cg.apps.ipaid.request.PurchaseRequest;
-
 import net.sourceforge.tess4j.ITesseract;
 import net.sourceforge.tess4j.Tesseract;
 import net.sourceforge.tess4j.TesseractException;
+
+import com.cg.apps.ipaid.response.PurchaseRequest;
 
 public class ImageExtractor {
 

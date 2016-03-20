@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.cg.apps.ipaid.request.PurchaseRequest;
+import com.cg.apps.ipaid.response.PurchaseRequest;
 import com.cg.apps.ipaid.service.PurchaseService;
 import com.cg.apps.ipaid.util.InvoiceTypes;
 

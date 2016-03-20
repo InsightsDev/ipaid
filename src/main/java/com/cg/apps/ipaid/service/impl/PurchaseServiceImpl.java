@@ -16,7 +16,8 @@ import org.springframework.stereotype.Service;
 
 import com.cg.apps.ipaid.entity.Purchase;
 import com.cg.apps.ipaid.logging.Loggable;
-import com.cg.apps.ipaid.request.PurchaseRequest;
+import com.cg.apps.ipaid.response.PurchaseRequest;
+import com.cg.apps.ipaid.response.PurchaseResponse;
 import com.cg.apps.ipaid.service.PurchaseService;
 import com.mongodb.BasicDBObject;
 import com.mongodb.DBObject;
@@ -66,12 +67,12 @@ public class PurchaseServiceImpl implements PurchaseService {
 
 	@Override
 	@Loggable
-	public List<Purchase> fetchPurchaseDetails(String key, String value) {
+	public List<PurchaseResponse> fetchPurchaseDetails(String key, String value) {
 		List<GridFSDBFile> results = gridOperations.find(new Query().addCriteria(Criteria.where(key).is(value)));
-		List<Purchase> purchases = new ArrayList<>();
+		List<PurchaseResponse> purchases = new ArrayList<>();
 		for(GridFSDBFile file: results) {
 			Purchase purchase = mapper.map(file, Purchase.class);
-			purchases.add(purchase);
+			purchases.add(mapper.map(purchase, PurchaseResponse.class));
 		}
 		return purchases;
 	}

@@ -24,8 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
 
-import com.cg.apps.ipaid.entity.PurchaseMetaData;
-import com.cg.apps.ipaid.request.PurchaseRequest;
+import com.cg.apps.ipaid.response.PurchaseRequest;
 
 public class FlipkartEmailParser implements EmailParser {
 
