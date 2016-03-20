@@ -60,6 +60,17 @@ public class PurchaseServiceImpl implements PurchaseService {
         try {
             inputStream = new FileInputStream(purchaseRequest.getBill());
             gridOperations.store(inputStream, purchaseRequest.getBill().getName(), "application/octet-stream", metaData);
+            Double currentExpenditure = 0d;
+            Double totalExpenditure = 0d;
+            GridFSDBFile user = gridOperations.findOne(new Query().addCriteria(Criteria.where("metadata.emailId").is(purchaseRequest.getUserId())));
+            if(null != user && null != user.getMetaData() ) {
+                currentExpenditure = (Double)user.getMetaData().get("totalExpenditure");
+                totalExpenditure = (currentExpenditure != null)? currentExpenditure:0 + purchaseRequest.getProductCost();
+                user.getMetaData().put("totalExpenditure", totalExpenditure);
+                user.save();
+            }
+            
+        
         } catch (Exception e) {
             e.printStackTrace();
         } finally {
