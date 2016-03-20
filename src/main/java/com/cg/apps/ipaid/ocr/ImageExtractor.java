@@ -31,7 +31,7 @@ public class ImageExtractor {
 		List<String> list = new ArrayList<String>(Arrays.asList(lines));
 		list.removeAll(Arrays.asList("",null));
 		purchaseRequest.setStoreName(list.get(0));
-		purchaseRequest.setLocation(list.get(2));
+		purchaseRequest.setLocation(list.get(2).replaceAll("[^A-Za-z]", " " ).trim());
 		for(int i=0; i<list.size(); i++) {
 			if(list.get(i).contains("Item Name")) {
 				purchaseRequest.setProductName(list.get(i+1).replaceAll("[^A-Za-z]"," ").trim());

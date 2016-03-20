@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.cg.apps.ipaid.entity.TrendResponse;
 import com.cg.apps.ipaid.logging.Loggable;
 import com.cg.apps.ipaid.ocr.ImageExtractor;
 import com.cg.apps.ipaid.response.PurchaseRequest;
@@ -67,4 +68,11 @@ public class PurchaseController {
 	public List<String> fetchDistinctProductNames() {
 		return purchaseService.fetchDistinctProductNames();
 	}
+	
+	@RequestMapping(value="/hotTrends")
+	public List<TrendResponse> hotTrends() {
+		return purchaseService.fetchHotTrends();
+	}
+	
+	
 }
