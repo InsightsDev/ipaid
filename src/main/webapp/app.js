@@ -44,7 +44,7 @@ app.config(['$routeProvider', function ($routeProvider) {
 	this.getSearchResult = function(productName) {
 					return $http({
 						method: 'GET',
-						url: 'purchase/fetchProductCost',
+						url: 'Jsons/search.json',
 						params: {productName: productName}
 					});
 	}
@@ -93,7 +93,7 @@ app.config(['$routeProvider', function ($routeProvider) {
 	$scope.displayDetails = function (){
 		productName = $scope.productName
 		appService.getSearchResult(productName).then(function(data){
-			$scope.serachData = data.data.users;
+			$scope.serachData = data.data.products;
 		})
 	}
 	$scope.upload = function (element){
@@ -109,7 +109,6 @@ app.config(['$routeProvider', function ($routeProvider) {
 	    angular.element('#bill').trigger('click');
 	}
 	$scope.email = function () {
-		  alert('hi');
 		  $location.path('#/email');
 		};
 }])
