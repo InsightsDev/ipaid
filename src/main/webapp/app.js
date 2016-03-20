@@ -110,7 +110,7 @@ app.config([ '$routeProvider', function($routeProvider) {
 					$scope.serachData = data.data.products;
 				})
 			}
-			$scope.displayHotDeals = function() {
+			appService.displayHotDeals = function() {
 				appService.getHotDeals().then(function(data) {
 					$scope.hotDeals = data.data.deals;
 				})

@@ -694,3 +694,11 @@ h1 {
     background: url("images/hot.png") no-repeat left center transparent;
     background-size: 100% 100%;
 }
+progress[value] {
+  /* Reset the default appearance */
+  -webkit-appearance: none;
+   appearance: none;
+
+  width: 90%;
+  height: 20px;
+}
